@@ -1,4 +1,5 @@
 import { SignUpController } from './signup'
+import { MissingParamError } from '../errors/missing-param-error'
 
 describe('SignUp Controller', () => {
   test('Should return 400 if no name is provided', () => { 
@@ -19,7 +20,7 @@ describe('SignUp Controller', () => {
     expect(httpResponse.statusCode).toBe(400)
 
     // Usamos o 'toEqual' para comparar valores, 'toBe' compara objetos.
-    expect(httpResponse.body).toEqual(new Error("Missing param: name"))
+    expect(httpResponse.body).toEqual(new MissingParamError('name'))
   })
 
   test('Should return 400 if no email is provided', () => { 
@@ -38,6 +39,6 @@ describe('SignUp Controller', () => {
     // A função 'handle' da classe sut precisa retornar status 400.
     const httpResponse = sut.handle(httpRequest)
     expect(httpResponse.statusCode).toBe(400)
-    expect(httpResponse.body).toEqual(new Error("Missing param: email"))
+    expect(httpResponse.body).toEqual(new MissingParamError('email'))
   })
 })
