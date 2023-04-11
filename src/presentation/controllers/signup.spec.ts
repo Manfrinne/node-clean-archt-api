@@ -41,4 +41,23 @@ describe('SignUp Controller', () => {
     expect(httpResponse.statusCode).toBe(400)
     expect(httpResponse.body).toEqual(new MissingParamError('email'))
   })
+
+  test('Should return 400 if no password is provided', () => { 
+    // Classe sut (System Under Test).
+    const sut = new SignUpController()
+
+    // Objeto que a classe precisa receber.
+    const httpRequest = {
+      body: {
+        name: 'any_name',
+        email: 'any_email@mail.com',
+        passwordConfirmation: 'any_password'
+      }
+    }
+
+    // A função 'handle' da classe sut precisa retornar status 400.
+    const httpResponse = sut.handle(httpRequest)
+    expect(httpResponse.statusCode).toBe(400)
+    expect(httpResponse.body).toEqual(new MissingParamError('password'))
+  })
 })
