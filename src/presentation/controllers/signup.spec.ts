@@ -2,14 +2,13 @@ import { SignUpController } from './signup'
 import { MissingParamError } from '../errors/missing-param-error'
 import { InvalidParamError } from '../errors/invalid-param-error'
 import { EmailValidator } from '../protocols/email-validator'
+import { ServerError } from '../errors/server-error'
 
-// Interface para conseguir manipular e utilizar o Mock SutStub tanto na injeção de dependência como também na verificação de parâmetros obrigatórios.
 interface SutType {
   sut: SignUpController
   emailValidatorStub: EmailValidator
 }
 
-// Com o Factory não precisaremos repetir código em cada teste quando injetar dependências.
 const makeSut = (): SutType => {
   class EmailValidatorStub implements EmailValidator {
     isValid (email: string): boolean {
@@ -17,7 +16,6 @@ const makeSut = (): SutType => {
     }
   }
 
-  // Stub é um tipo de Mock
   const emailValidatorStub  = new EmailValidatorStub()
   const sut = new SignUpController(emailValidatorStub)
   return {
@@ -28,10 +26,8 @@ const makeSut = (): SutType => {
 
 describe('SignUp Controller', () => {
   test('Should return 400 if no name is provided', () => { 
-    // Classe sut (System Under Test).
     const { sut } = makeSut()
 
-    // Objeto que a classe precisa receber.
     const httpRequest = {
       body: {
         email: 'any_email@mail.com',
@@ -40,11 +36,9 @@ describe('SignUp Controller', () => {
       }
     }
 
-    // A função 'handle' da classe sut precisa retornar status 400.
     const httpResponse = sut.handle(httpRequest)
     expect(httpResponse.statusCode).toBe(400)
 
-    // Usamos o 'toEqual' para comparar valores, 'toBe' compara objetos.
     expect(httpResponse.body).toEqual(new MissingParamError('name'))
   })
 
@@ -97,10 +91,8 @@ describe('SignUp Controller', () => {
   })
 
   test('Should return 400 if an invalid email is provided', () => {
-    // Criamos a interface sutType, para poder acessar o emailValidatorStub 
     const { sut, emailValidatorStub } = makeSut()
     
-    // Agora com o Jest, conseguimos modificar o MockStub que padronizamos
     jest.spyOn(emailValidatorStub, 'isValid').mockReturnValueOnce(false)
 
     const httpRequest = {
@@ -132,5 +124,30 @@ describe('SignUp Controller', () => {
 
     sut.handle(httpRequest)
     expect(isValidSpy).toHaveBeenCalledWith('any_email@mail.com')
+  })
+
+  // Emitir outro código caso haja um erro de exceção ou server error
+  test('Should return 500 if EmailValidator throws', () => { 
+    class EmailValidatorStub implements EmailValidator {
+      isValid (email: string): boolean {
+        throw new Error()
+      }
+    }
+
+    const emailValidatorStub = new EmailValidatorStub()
+    const sut = new SignUpController(emailValidatorStub)
+
+    const httpRequest = {
+      body: {
+        name: 'any_name',
+        email: 'any_email@mail.com',
+        password: 'any_password',
+        passwordConfirmation: 'any_password'
+      }
+    }
+
+    const httpResponse = sut.handle(httpRequest)
+    expect(httpResponse.statusCode).toBe(500) // 500: Server Error
+    expect(httpResponse.body).toEqual(new ServerError())
   })
 })
