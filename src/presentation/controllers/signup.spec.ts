@@ -7,22 +7,10 @@ interface SutType {
   emailValidatorStub: EmailValidator
 }
 
-// Prevendo que haverá novas injeções de dependências no futuro, separamos o Factory
 const makeEmailValidator = (): EmailValidator => {
   class EmailValidatorStub implements EmailValidator {
     isValid (email: string): boolean {
       return true
-    }
-  }
-
-  return new EmailValidatorStub()
-}
-
-// Um Factory que retorna uma exceção
-const makeEmailValidatorWithError = (): EmailValidator => {
-  class EmailValidatorStub implements EmailValidator {
-    isValid (email: string): boolean {
-     throw new Error()
     }
   }
 
@@ -141,10 +129,12 @@ describe('SignUp Controller', () => {
     expect(isValidSpy).toHaveBeenCalledWith('any_email@mail.com')
   })
 
-  // Emitir outro código caso haja um erro de exceção ou server error
+  // Outra maneira de resolver esse tipo de validação sem precisar criar outro Factory
   test('Should return 500 if EmailValidator throws', () => { 
-    const emailValidatorStub = makeEmailValidatorWithError()
-    const sut = new SignUpController(emailValidatorStub)
+    const { sut, emailValidatorStub } = makeSut()
+    jest.spyOn(emailValidatorStub, 'isValid').mockImplementationOnce(() => {
+      throw new Error()
+    })
 
     const httpRequest = {
       body: {
