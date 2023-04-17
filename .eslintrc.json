@@ -1,7 +1,7 @@
 {
-  "extends": "standard-with-typescript",
-  "parserOptions": {
-    "project": "./tsconfig.json"
-  },
-  "strictNullChecks": true
+  "extends": ["eslint:recommended", "plugin:node/recommended", "prettier"],
+  "plugins": ["prettier"],
+  "rules": {
+    "prettier/prettier": "error"
+  }
 }
