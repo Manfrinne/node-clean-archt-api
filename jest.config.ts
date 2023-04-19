@@ -11,13 +11,10 @@ export default {
   roots: ['<rootDir>/src'],
 
   // An array of glob patterns indicating a set of files for which coverage information should be collected
-  collectCoverageFrom: ['<rootDir>src/**/*.ts'],
+  collectCoverageFrom: ['**/src/**/*.ts', '!**/src/main/**'],
 
   // The directory where Jest should output its coverage files
   coverageDirectory: 'coverage',
-
-  // Indicates which provider should be used to instrument code for coverage
-  coverageProvider: 'v8',
 
   // The test environment that will be used for testing
   // testEnvironment: "jest-environment-node",
@@ -27,6 +24,15 @@ export default {
   transform: {
     '.+\\.ts$': 'ts-jest',
   },
+
+  // Indicates which provider should be used to instrument code for coverage
+  coverageProvider: 'v8',
+
+  // A list of reporter names that Jest uses when writing coverage reports
+  coverageReporters: ['json', 'text', 'lcov', 'clover', 'html'],
+
+  // The glob patterns Jest uses to detect test files
+  // testMatch: ['**/__tests__/**/*.[jt]s?(x)', '**/?(*.)+(spec|test).[tj]s?(x)'],
 
   // All imported modules in your tests should be mocked automatically
   // automock: false,
@@ -43,14 +49,6 @@ export default {
   // An array of regexp pattern strings used to skip coverage collection
   // coveragePathIgnorePatterns: [
   //   "/node_modules/"
-  // ],
-
-  // A list of reporter names that Jest uses when writing coverage reports
-  // coverageReporters: [
-  //   "json",
-  //   "text",
-  //   "lcov",
-  //   "clover"
   // ],
 
   // An object that configures minimum threshold enforcement for coverage results
@@ -155,12 +153,6 @@ export default {
 
   // Adds a location field to test results
   // testLocationInResults: false,
-
-  // The glob patterns Jest uses to detect test files
-  // testMatch: [
-  //   "**/__tests__/**/*.[jt]s?(x)",
-  //   "**/?(*.)+(spec|test).[tj]s?(x)"
-  // ],
 
   // An array of regexp pattern strings that are matched against all test paths, matched tests are skipped
   // testPathIgnorePatterns: [
