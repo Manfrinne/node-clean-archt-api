@@ -15,11 +15,13 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "git-commit-msg-linter": "^4.9.4"
+    "git-commit-msg-linter": "^4.9.4",
+    "validator": "^13.9.0"
   },
   "devDependencies": {
     "@types/jest": "^29.5.0",
     "@types/node": "^18.15.11",
+    "@types/validator": "^13.7.15",
     "eslint": "^8.38.0",
     "eslint-config-node": "^4.1.0",
     "eslint-config-prettier": "^8.8.0",
