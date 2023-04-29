@@ -31,4 +31,4 @@
 ## 6. SignUp API - Data Layer
 
 - [x] 1. Criando o DbAddAccount e integrando com o Encrypter
-- [ ] 2. Integrando com o AddAccountRepository
+- [x] 2. Integrando com o AddAccountRepository
