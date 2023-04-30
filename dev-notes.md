@@ -32,3 +32,9 @@
 
 - [x] 1. Criando o DbAddAccount e integrando com o Encrypter
 - [x] 2. Integrando com o AddAccountRepository
+
+## 7. SignUp API - Infra Layer
+
+- [ ] 1. Criando o BcryptAdapter e mockando o bcrypt
+- [ ] 2. Configurando MongoDb em memória
+- [ ] 3. Testando o MongoDb
