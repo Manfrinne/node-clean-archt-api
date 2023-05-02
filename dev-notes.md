@@ -37,4 +37,24 @@
 
 - [x] 1. Criando o BcryptAdapter e mockando o bcrypt
 - [x] 2. Configurando MongoDb em memória
-- [ ] 3. Testando o MongoDb
+- [x] 3. Testando o MongoDb
+
+  - Se der problema, usar essa estratégia para mapear o '\_id' do MongoDB:
+
+    ```typescript
+    import { AddAccountRepository } from '../../../../data/protocols/add-account-repository';
+    import { AccountModel } from '../../../../domain/models/account';
+    import { AddAccountModel } from '../../../../domain/usecases/add-account';
+    import { MongoHelper } from '../helpers/mongo-helper';
+
+    export class AccountMongoRepository implements AddAccountRepository {
+      async add(accountData: AddAccountModel): Promise<AccountModel> {
+        const accountCollection = MongoHelper.getCollection('accounts');
+        const result = await accountCollection.insertOne(accountData);
+        const { _id, ...collectionWithoutId } = result;
+
+        // Isso deve retornar um objeto sem o '_id'
+        return Object.assign({}, accountWithoutId, { id: _id });
+      }
+    }
+    ```
