@@ -62,5 +62,5 @@
 ## 8. SignUp API - Main Layer
 
 - [x] 1. Testando middlewares do express
-- [ ] 2. Criando teste de integração para o SignUp
+- [x] 2. Criando teste de integração para o SignUp
 - [ ] 3. Fazendo a composição do SignUp e desacoplando do express
