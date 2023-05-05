@@ -1,15 +1,6 @@
 import { SignUpController } from './signup';
-import {
-  MissingParamError,
-  InvalidParamError,
-  ServerError,
-} from '../../errors';
-import {
-  EmailValidator,
-  AddAccount,
-  AddAccountModel,
-  AccountModel,
-} from './signup-protocols';
+import { MissingParamError, InvalidParamError, ServerError } from '../../errors';
+import { EmailValidator, AddAccount, AddAccountModel, AccountModel } from './signup-protocols';
 
 const makeEmailValidator = (): EmailValidator => {
   class EmailValidatorStub implements EmailValidator {
@@ -120,9 +111,7 @@ describe('SignUp Controller', () => {
 
     const httpResponse = await sut.handle(httpRequest);
     expect(httpResponse.statusCode).toBe(400);
-    expect(httpResponse.body).toEqual(
-      new MissingParamError('passwordConfirmation')
-    );
+    expect(httpResponse.body).toEqual(new MissingParamError('passwordConfirmation'));
   });
 
   test('Should return 400 if an invalid email is provided', async () => {
@@ -195,9 +184,7 @@ describe('SignUp Controller', () => {
 
     const httpResponse = await sut.handle(httpRequest);
     expect(httpResponse.statusCode).toBe(400);
-    expect(httpResponse.body).toEqual(
-      new InvalidParamError('passwordConfirmation')
-    );
+    expect(httpResponse.body).toEqual(new InvalidParamError('passwordConfirmation'));
   });
 
   test('Should call AddAccount with correct values', async () => {
