@@ -1,6 +1,6 @@
 # Desenvolver uma aplicação node.js orientada a testes (TDD)
 
-> O objetivo é mapear os passos de desenvolvimento de acordo com as aulas do curso. A ideia desse projeto é criar uma API completa baseado em Programação Orientada a Testes e Arquitetura Limpa, de acordo com os princípios SOLID.
+> O objetivo é mapear os passos de desenvolvimento de acordo com as aulas do curso. A ideia desse projeto é criar uma API completa baseado em Programação Orientada a Testes e Arquitetura Limpa, de acordo com os princípios SOLID - Essa API faz parte do treinamento do professor Rodrigo Manguinho (Mango) na Udemy.
 
 ## 0. SOLID
 
@@ -85,4 +85,4 @@
 
 - [x] 1. Testando middlewares do express
 - [x] 2. Criando teste de integração para o SignUp
-- [ ] 3. Fazendo a composição do SignUp e desacoplando do express
+- [x] 3. Fazendo a composição do SignUp e desacoplando do express
